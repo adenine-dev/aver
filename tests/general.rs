@@ -2,7 +2,7 @@
 
 #[macro_use] extern crate aver;
 
-/// These tests should be run with `cargo test -- --no-capture` (not a typo) so you can see the output
+/// These tests should be run with `cargo test -- --nocapture` (not a typo) so you can see the output
 
 #[test]
 fn single_arg() {
