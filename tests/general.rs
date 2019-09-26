@@ -16,5 +16,5 @@ fn multi_arg() {
 
 #[test]
 fn multi_type() {
-  log_info!("these have", 3, "types", true);
+  log_info!("does this have", 3, "types? ", true);
 }

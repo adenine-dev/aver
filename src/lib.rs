@@ -16,22 +16,22 @@ macro_rules! log {
 
 #[macro_export]
 macro_rules! __generic_log {
-  ($prefix:expr, $arg:expr) => {
-    log!($prefix, ": ", file!(), ":", line!(), " - ", $arg, "\n");
-  };
+  //HACK: the first arg should be the token $, this is a hack to make nested macros work
+  ($d:tt, $name:ident, $prefix:expr) => {
+    #[macro_export]
+    macro_rules! $name {
+      ($arg:expr) => {
+        log!($prefix, ": ", file!(), ":", line!(), " - ", $arg, "\n");
+      };
 
-  ($prefix:expr, $($args:expr),+) => {
-    log!($prefix, ": ", file!(), ":", line!(), " - ", $($args),+, "\n");
-  };
+      ($d($d args:expr),+) => {
+        log!($prefix, ": ", file!(), ":", line!(), " - ", $d($d args),+, "\n");
+      };
+    } 
+  }
 }
 
-#[macro_export]
-macro_rules! log_info {
-  ($arg:expr) => {
-    __generic_log!("[INFO]", $arg);
-  };
-
-  ($($args:expr),+) => {
-    __generic_log!("[INFO]", $($args),+);
-  };
-}
+__generic_log!($, log_trace, "[TRACE]");
+__generic_log!($, log_info,  "[INFO]");
+__generic_log!($, log_warn,  "[WARN]");
+__generic_log!($, log_error, "[ERROR]");
