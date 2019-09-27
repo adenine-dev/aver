@@ -1,8 +1,10 @@
 #[cfg(windows)] extern crate winapi;
 #[cfg(windows)] use std::io::Write;
 
+#[cfg(windows)]
 static mut CONSOLE_CONFIG: winapi::shared::minwindef::WORD = 0;
 
+#[cfg(windows)]
 fn get_handle() -> std::io::Result<winapi::um::winnt::HANDLE> {
   use winapi::um::winnt::{ FILE_SHARE_WRITE, GENERIC_READ, GENERIC_WRITE };
 
@@ -22,8 +24,25 @@ fn get_handle() -> std::io::Result<winapi::um::winnt::HANDLE> {
   } else { Ok(handle) }
 }
 
+/// creates the console color, preserving the pervious color settings if an arg is set to -1
+#[cfg(windows)]
+fn make_win_color(fg: i16, bg: i16) -> winapi::shared::minwindef::WORD {
+  unsafe {
+    let mut new_color: winapi::shared::minwindef::WORD = CONSOLE_CONFIG;
+    if fg != -1 {
+      new_color &= !(new_color & 0x0F);
+      new_color |= fg as winapi::shared::minwindef::WORD;
+    }
+    if bg != -1 {
+      new_color &= !(new_color & 0xF0);
+      new_color |= bg as winapi::shared::minwindef::WORD;
+    }
+    new_color
+  }
+}
+
 macro_rules! make_color_fns {
-  ($name:ident, $linux_code:expr, $win_code:expr) => {
+  ($name:ident, $linux_code:expr, $win_code_fg:expr, $win_code_bg:expr) => {
     #[cfg(not(windows))]
     pub fn $name() -> String { $linux_code }
 
@@ -31,7 +50,7 @@ macro_rules! make_color_fns {
     pub fn $name() -> String {
       std::io::stdout().flush().expect("Flush stdout failed!");
       unsafe {
-        CONSOLE_CONFIG = $win_code;
+        CONSOLE_CONFIG = make_win_color($win_code_fg as i16, $win_code_bg as i16);
         let handle = get_handle();
         match handle {
           Ok(h) => { winapi::um::wincon::SetConsoleTextAttribute(h, CONSOLE_CONFIG); }
@@ -43,11 +62,11 @@ macro_rules! make_color_fns {
   };
 }
 
-make_color_fns!(reset, "\033[00m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE);
-make_color_fns!(grey, "\033[30m", 0);
-make_color_fns!(red, "\033[31m", winapi::um::wincon::FOREGROUND_RED);
-make_color_fns!(yellow, "\033[33m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN);
-make_color_fns!(green, "\033[32m", winapi::um::wincon::FOREGROUND_GREEN);
-make_color_fns!(cyan, "\033[36m", winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE);
-make_color_fns!(blue, "\033[34m", winapi::um::wincon::FOREGROUND_BLUE);
-make_color_fns!(magenta, "\033[45m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_BLUE);
+make_color_fns!(reset, "\033[00m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, 0);
+make_color_fns!(grey, "\033[30m", 0, -1);
+make_color_fns!(red, "\033[31m", winapi::um::wincon::FOREGROUND_RED, -1);
+make_color_fns!(yellow, "\033[33m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN, -1);
+make_color_fns!(green, "\033[32m", winapi::um::wincon::FOREGROUND_GREEN, -1);
+make_color_fns!(cyan, "\033[36m", winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
+make_color_fns!(blue, "\033[34m", winapi::um::wincon::FOREGROUND_BLUE, -1);
+make_color_fns!(magenta, "\033[45m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_BLUE, -1);
