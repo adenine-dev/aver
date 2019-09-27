@@ -73,5 +73,5 @@ make_log_fn!($, log_debug, "[DEBUG]", LogLevel::Debug, colors::reset());
 make_log_fn!($, log_info,  "[INFO]",  LogLevel::Info, colors::cyan());
 make_log_fn!($, log_warn,  "[WARN]",  LogLevel::Warn, colors::yellow());
 make_log_fn!($, log_error, "[ERROR]", LogLevel::Error, colors::red());
-make_log_fn!($, log_fatal, "[FATAL]", LogLevel::Fatal, colors::red());
+make_log_fn!($, log_fatal, "[FATAL]", LogLevel::Fatal, colors::on_red());
 

@@ -63,10 +63,21 @@ macro_rules! make_color_fns {
 }
 
 make_color_fns!(reset, "\033[00m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, 0);
+
+make_color_fns!(white, "\033[30m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
 make_color_fns!(grey, "\033[30m", 0, -1);
 make_color_fns!(red, "\033[31m", winapi::um::wincon::FOREGROUND_RED, -1);
 make_color_fns!(yellow, "\033[33m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN, -1);
 make_color_fns!(green, "\033[32m", winapi::um::wincon::FOREGROUND_GREEN, -1);
 make_color_fns!(cyan, "\033[36m", winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
 make_color_fns!(blue, "\033[34m", winapi::um::wincon::FOREGROUND_BLUE, -1);
-make_color_fns!(magenta, "\033[45m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_BLUE, -1);
+make_color_fns!(magenta, "\033[35m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_BLUE, -1);
+
+make_color_fns!(on_white, "\033[107m", -1,winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_GREEN | winapi::um::wincon::BACKGROUND_BLUE);
+make_color_fns!(on_grey, "\033[100m", -1, 0);
+make_color_fns!(on_red, "\033[41m", -1, winapi::um::wincon::BACKGROUND_RED);
+make_color_fns!(on_yellow, "\033[43m", -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_GREEN);
+make_color_fns!(on_green, "\033[42m", -1, winapi::um::wincon::BACKGROUND_GREEN);
+make_color_fns!(on_cyan, "\033[46m", -1, winapi::um::wincon::BACKGROUND_GREEN | winapi::um::wincon::BACKGROUND_BLUE);
+make_color_fns!(on_blue, "\033[44m", -1, winapi::um::wincon::BACKGROUND_BLUE);
+make_color_fns!(on_magenta, "\033[45m", -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_BLUE);

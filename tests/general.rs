@@ -39,12 +39,14 @@ fn should_not_print() {
 
 #[test]
 fn colors() {
-  log!(aver::colors::grey(), "grey\n");
-  log!(aver::colors::red(), "red\n");
-  log!(aver::colors::yellow(), "yellow\n");
-  log!(aver::colors::green(), "green\n");
-  log!(aver::colors::cyan(), "cyan\n");
-  log!(aver::colors::blue(), "blue\n");
-  log!(aver::colors::magenta(), "magenta\n");
-  log!(aver::colors::reset(), "cleared\n");
+  log!("\n"); // make it print no on the same line
+  log!(aver::colors::grey(),    "grey ",    aver::colors::reset(), aver::colors::on_grey(),    "on grey",    aver::colors::reset(), "\n");
+  log!(aver::colors::red(),     "red ",     aver::colors::reset(), aver::colors::on_red(),     "on red",     aver::colors::reset(), "\n");
+  log!(aver::colors::yellow(),  "yellow ",  aver::colors::reset(), aver::colors::on_yellow(),  "on yellow",  aver::colors::reset(), "\n");
+  log!(aver::colors::green(),   "green ",   aver::colors::reset(), aver::colors::on_green(),   "on green",   aver::colors::reset(), "\n");
+  log!(aver::colors::cyan(),    "cyan ",    aver::colors::reset(), aver::colors::on_cyan(),    "on cyan",    aver::colors::reset(), "\n");
+  log!(aver::colors::blue(),    "blue ",    aver::colors::reset(), aver::colors::on_blue(),    "on blue",    aver::colors::reset(), "\n");
+  log!(aver::colors::magenta(), "magenta ", aver::colors::reset(), aver::colors::on_magenta(), "on magenta", aver::colors::reset(), "\n");
+  log!(aver::colors::white(),   "white ",   aver::colors::reset(), aver::colors::on_white(),   "on white",   aver::colors::reset(), "\n");
+  log!(aver::colors::reset(),   "reset\n");
 }
