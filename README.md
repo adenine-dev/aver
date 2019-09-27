@@ -25,5 +25,6 @@ Aver comes with 8 logging levels: `All`, `Trace`, `Debug`, `Info`, `Warn`, `Erro
 Using colors is as simple as:
 ```rust
 log_info!(aver::colors::blue(), "this will be shown in blue!", aver::colors::reset(), " and this won't");
+log_info!(aver::colors::on_blue(), "this will be shown on blue!", aver::colors::reset(), " and this won't");
 ```
-Currently `grey`, `red`, `yellow`, `green`, `cyan`, `blue`, and `magenta` are supported. Linux systems are untested however should work™.
+Currently `white`, `grey`, `red`, `yellow`, `green`, `cyan`, `blue`, and `magenta` are supported for text color, and `on_white`, `on_grey`, `on_red`, `on_yellow`, `on_green`, `on_cyan`, `on_blue`, and `on_magenta` are supported for background colors. Linux systems are untested however should work™.
