@@ -1,1 +1,2 @@
 - [ ] test on linux
+- [ ] background colors
