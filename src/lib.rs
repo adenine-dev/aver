@@ -15,7 +15,7 @@ macro_rules! log {
 }
 
 #[macro_export]
-macro_rules! __generic_log {
+macro_rules! _make_log_level {
   //HACK: the first arg should be the token $, this is a hack to make nested macros work
   ($d:tt, $name:ident, $prefix:expr) => {
     #[macro_export]
@@ -31,7 +31,7 @@ macro_rules! __generic_log {
   }
 }
 
-__generic_log!($, log_trace, "[TRACE]");
-__generic_log!($, log_info,  "[INFO]");
-__generic_log!($, log_warn,  "[WARN]");
-__generic_log!($, log_error, "[ERROR]");
+_make_log_level!($, log_trace, "[TRACE]");
+_make_log_level!($, log_info,  "[INFO]");
+_make_log_level!($, log_warn,  "[WARN]");
+_make_log_level!($, log_error, "[ERROR]");
