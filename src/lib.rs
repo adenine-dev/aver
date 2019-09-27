@@ -1,3 +1,5 @@
+pub mod colors;
+
 #[derive(Copy, Clone, PartialEq, PartialOrd)]
 pub enum LogLevel {
   All, // practically equivalent to Trace, here for convenience
@@ -53,7 +55,7 @@ macro_rules! _make_log_level {
     macro_rules! $name {
       ($arg:expr) => {
         if($crate::$level >= $crate::get_log_level()) {
-          log!($prefix, ": ", file!(), ":", line!(), " - ", $arg, "\n");
+          log!($crate::colors::colors::blue(), $prefix, ": ", file!(), ":", line!(), " - ", $arg, "\n");
         }
       };
 
@@ -72,3 +74,4 @@ _make_log_level!($, log_info,  "[INFO]",  LogLevel::Info);
 _make_log_level!($, log_warn,  "[WARN]",  LogLevel::Warn);
 _make_log_level!($, log_error, "[ERROR]", LogLevel::Error);
 _make_log_level!($, log_fatal, "[FATAL]", LogLevel::Fatal);
+
