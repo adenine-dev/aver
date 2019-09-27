@@ -31,9 +31,22 @@ fn error() {
 }
 
 #[test]
+fn fatal() {
+  log_fatal!("this is an fatal!");
+}
+
+#[test]
 fn should_not_print() {
   aver::set_log_level(aver::LogLevel::Fatal);
   log_error!("this should not print");
+  aver::set_log_level(aver::LogLevel::Info);
+}
+
+#[test]
+fn trace_and_debug_print() {
+  aver::set_log_level(aver::LogLevel::All);
+  log_trace!("this is a trace");
+  log_debug!("this is a debug");
   aver::set_log_level(aver::LogLevel::Info);
 }
 
