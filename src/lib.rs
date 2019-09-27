@@ -1,6 +1,6 @@
 #[derive(Copy, Clone, PartialEq, PartialOrd)]
 pub enum LogLevel {
-  All = 0, // practically equivalent to Trace, here for convenience
+  All, // practically equivalent to Trace, here for convenience
   Trace,
   Debug,
   Info,
