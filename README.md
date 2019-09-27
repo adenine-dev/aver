@@ -4,7 +4,7 @@ A dead simple logging library for rust. Currently supports colors, logging level
 ## Installation
 simply add this to your Cargo.toml
 ```
-aver = "0.1.2"
+aver = "0.1.3"
 ```
 
 ## Usage
