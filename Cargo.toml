@@ -3,8 +3,9 @@ name = "aver"
 version = "0.1.1"
 authors = ["alexa <alexa.griffin42@gmail.com>"]
 edition = "2018"
-description = "A dead simple dependencyless (not windows sorry) logging library."
+description = ""
 license = "MIT"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
