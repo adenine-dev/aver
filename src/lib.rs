@@ -68,10 +68,10 @@ macro_rules! make_log_fn {
   }
 }
 
-make_log_fn!($, log_trace, "[TRACE]", LogLevel::Trace, colors::blue());
-make_log_fn!($, log_debug, "[DEBUG]", LogLevel::Debug, colors::blue());
-make_log_fn!($, log_info,  "[INFO]",  LogLevel::Info, colors::blue());
-make_log_fn!($, log_warn,  "[WARN]",  LogLevel::Warn, colors::blue());
-make_log_fn!($, log_error, "[ERROR]", LogLevel::Error, colors::blue());
-make_log_fn!($, log_fatal, "[FATAL]", LogLevel::Fatal, colors::blue());
+make_log_fn!($, log_trace, "[TRACE]", LogLevel::Trace, colors::grey());
+make_log_fn!($, log_debug, "[DEBUG]", LogLevel::Debug, colors::reset());
+make_log_fn!($, log_info,  "[INFO]",  LogLevel::Info, colors::cyan());
+make_log_fn!($, log_warn,  "[WARN]",  LogLevel::Warn, colors::yellow());
+make_log_fn!($, log_error, "[ERROR]", LogLevel::Error, colors::red());
+make_log_fn!($, log_fatal, "[FATAL]", LogLevel::Fatal, colors::red());
 

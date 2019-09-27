@@ -45,6 +45,10 @@ macro_rules! make_color_fns {
 
 make_color_fns!(reset, "\033[00m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE);
 make_color_fns!(grey, "\033[30m", 0);
+make_color_fns!(gray, "\033[30m", 0); // alternate spelling because i am never sure which is right
 make_color_fns!(red, "\033[31m", winapi::um::wincon::FOREGROUND_RED);
+make_color_fns!(yellow, "\033[33m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN);
 make_color_fns!(green, "\033[32m", winapi::um::wincon::FOREGROUND_GREEN);
+make_color_fns!(cyan, "\033[36m", winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE);
 make_color_fns!(blue, "\033[34m", winapi::um::wincon::FOREGROUND_BLUE);
+make_color_fns!(magenta, "\033[45m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_BLUE);

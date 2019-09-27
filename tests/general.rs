@@ -39,7 +39,19 @@ fn should_not_print() {
 
 #[test]
 fn colors() {
+  aver::colors::grey();
+  aver::_log("grey\n");
+  aver::colors::red();
+  aver::_log("red\n");
+  aver::colors::yellow();
+  aver::_log("yellow\n");
+  aver::colors::green();
+  aver::_log("green\n");
+  aver::colors::cyan();
+  aver::_log("cyan\n");
   aver::colors::blue();
-  aver::_log("blue");
+  aver::_log("blue\n");
+  aver::colors::magenta();
+  aver::_log("magenta\n");
   aver::colors::reset();
 }
