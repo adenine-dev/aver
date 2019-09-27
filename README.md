@@ -1,5 +1,5 @@
 # Aver
-A dead simple logging library for rust. Currently supports colors, logging levels, and a simpler syntax. This library requires no dependencies (except for winapi if you are using windows.)
+A dead simple logging library for rust. Currently supports colors, logging levels, and a simpler syntax. This library requires no dependencies (except for winapi if you are using windows sorry.)
 
 ## Installation
 simply add this to your Cargo.toml
@@ -20,3 +20,10 @@ log_fatal!("Even worse than ana error!");
 
 ### Log levels
 Aver comes with 8 logging levels: `All`, `Trace`, `Debug`, `Info`, `Warn`, `Error`, `Fatal`, `Off`. In order of increasing precedence. You can set the log level with `aver::set_log_level(LogLevel)`, by default aver uses `Info` meaning that trace and debug will be disabled.
+
+### Colors
+Using colors is as simple as:
+```rust
+log_info!(aver::colors::blue(), "this will be shown in blue!", aver::colors::reset(), " and this won't");
+```
+Currently `grey`, `red`, `yellow`, `green`, `cyan`, `blue`, and `magenta` are supported. Linux systems are untested however should work™.
