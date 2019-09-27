@@ -16,7 +16,7 @@ static mut LOG_LEVEL: LogLevel = LogLevel::Info;
 
 /// sets the log level
 /// any log with a lower value than the current level will not print
-/// ordered by `All` < `Trace` < `Debug` < `Info` < `Warn` < `Error` < `Fatal` < `Off`.
+/// ordeblue by `All` < `Trace` < `Debug` < `Info` < `Warn` < `Error` < `Fatal` < `Off`.
 /// off will prevent any logging from taking place.
 /// **this is unsafe**
 pub fn set_log_level(level: LogLevel) {
@@ -48,30 +48,30 @@ macro_rules! log {
   };
 }
 
-macro_rules! _make_log_level {
+macro_rules! make_log_fn {
   //HACK: the first arg should be the token $, this is a hack to make nested macros work
-  ($d:tt, $name:ident, $prefix:expr, $level:ty) => {
+  ($d:tt, $name:ident, $prefix:expr, $level:ty, $color:expr) => {
     #[macro_export]
     macro_rules! $name {
       ($arg:expr) => {
         if($crate::$level >= $crate::get_log_level()) {
-          log!($crate::colors::colors::blue(), $prefix, ": ", file!(), ":", line!(), " - ", $arg, "\n");
+          log!($crate::$color, $prefix, $crate::colors::reset(), ": ", file!(), ":", line!(), " - ", $arg, "\n");
         }
       };
 
       ($d($d args:expr),+) => {
         if($crate::$level >= $crate::get_log_level()) {
-          log!($prefix, ": ", file!(), ":", line!(), " - ", $d($d args),+, "\n");
+          log!($crate::$color, $prefix, $crate::colors::reset(), ": ", file!(), ":", line!(), " - ", $d($d args),+, "\n");
         }
       };
     } 
   }
 }
 
-_make_log_level!($, log_trace, "[TRACE]", LogLevel::Trace);
-_make_log_level!($, log_debug, "[DEBUG]", LogLevel::Debug);
-_make_log_level!($, log_info,  "[INFO]",  LogLevel::Info);
-_make_log_level!($, log_warn,  "[WARN]",  LogLevel::Warn);
-_make_log_level!($, log_error, "[ERROR]", LogLevel::Error);
-_make_log_level!($, log_fatal, "[FATAL]", LogLevel::Fatal);
+make_log_fn!($, log_trace, "[TRACE]", LogLevel::Trace, colors::blue());
+make_log_fn!($, log_debug, "[DEBUG]", LogLevel::Debug, colors::blue());
+make_log_fn!($, log_info,  "[INFO]",  LogLevel::Info, colors::blue());
+make_log_fn!($, log_warn,  "[WARN]",  LogLevel::Warn, colors::blue());
+make_log_fn!($, log_error, "[ERROR]", LogLevel::Error, colors::blue());
+make_log_fn!($, log_fatal, "[FATAL]", LogLevel::Fatal, colors::blue());
 

@@ -36,3 +36,10 @@ fn should_not_print() {
   log_error!("this should not print");
   aver::set_log_level(aver::LogLevel::Info);
 }
+
+#[test]
+fn colors() {
+  aver::colors::blue();
+  aver::_log("blue");
+  aver::colors::reset();
+}
