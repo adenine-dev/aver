@@ -52,7 +52,7 @@ fn trace_and_debug_print() {
 
 #[test]
 fn colors() {
-  log!("\n"); // make it print no on the same line
+  log!("\n"); // make it not print on the same line
   log!(aver::colors::grey(),    "grey ",    aver::colors::reset(), aver::colors::on_grey(),    "on grey",    aver::colors::reset(), "\n");
   log!(aver::colors::red(),     "red ",     aver::colors::reset(), aver::colors::on_red(),     "on red",     aver::colors::reset(), "\n");
   log!(aver::colors::yellow(),  "yellow ",  aver::colors::reset(), aver::colors::on_yellow(),  "on yellow",  aver::colors::reset(), "\n");
