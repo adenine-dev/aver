@@ -1,2 +1,4 @@
-- [ ] test on linux
-- [ ] background colors
+- [x] test on linux
+- [x] background colors
+- [ ] fix the unsafe
+- [ ] make debug work

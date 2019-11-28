@@ -1,3 +1,4 @@
+#![feature(associated_type_bounds)]
 pub mod colors;
 
 #[derive(Copy, Clone, PartialEq, PartialOrd)]
@@ -16,7 +17,7 @@ static mut LOG_LEVEL: LogLevel = LogLevel::Info;
 
 /// sets the log level
 /// any log with a lower value than the current level will not print
-/// ordeblue by `All` < `Trace` < `Debug` < `Info` < `Warn` < `Error` < `Fatal` < `Off`.
+/// ordered by `All` < `Trace` < `Debug` < `Info` < `Warn` < `Error` < `Fatal` < `Off`.
 /// off will prevent any logging from taking place.
 /// **this is unsafe**
 pub fn set_log_level(level: LogLevel) {
@@ -35,6 +36,10 @@ pub fn get_log_level() -> LogLevel {
 macro_rules! log {
   ($arg:expr) => {
     print!("{}", $arg);
+  };
+
+  (d $arg:expr) => {
+    print!("{:?}", $arg);
   };
 
   ($arg0:expr, $($args:expr),+) => {

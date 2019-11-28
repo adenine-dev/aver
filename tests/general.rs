@@ -1,9 +1,10 @@
+//! These tests should be run with `cargo test -- --test-threads 1 --nocapture`
+//! this is done so you can see the output and the output doesn't mess with the automatically generated test output
+
 #![feature(test)]
 
 #[macro_use] extern crate aver;
 
-/// These tests should be run with `cargo test -- --test-threads 1 --nocapture`
-/// this is done so you can see the output and the output doesn't mess with the automatically generated test output
 
 #[test]
 fn single_arg() {
@@ -61,5 +62,6 @@ fn colors() {
   log!(aver::colors::blue(),    "blue ",    aver::colors::reset(), aver::colors::on_blue(),    "on blue",    aver::colors::reset(), "\n");
   log!(aver::colors::magenta(), "magenta ", aver::colors::reset(), aver::colors::on_magenta(), "on magenta", aver::colors::reset(), "\n");
   log!(aver::colors::white(),   "white ",   aver::colors::reset(), aver::colors::on_white(),   "on white",   aver::colors::reset(), "\n");
+  log!(aver::colors::red(), aver::colors::on_blue(), "red on blue ", aver::colors::reset(), "\n");
   log!(aver::colors::reset(),   "reset\n");
 }

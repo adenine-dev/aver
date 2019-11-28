@@ -93,8 +93,8 @@ impl ColorString {
 
 make_color_fns!(reset, ColorString::new("\x1B[00m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, 0);
 
-make_color_fns!(white, ColorString::new("\x1B[30m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
-make_color_fns!(grey, ColorString::new("\x1B[30m"), 0 | winapi::um::wincon::FOREGROUND_INTENSITY, -1);
+make_color_fns!(white, ColorString::new("\x1B[97m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
+make_color_fns!(grey, ColorString::new("\x1B[37m"), 0 | winapi::um::wincon::FOREGROUND_INTENSITY, -1);
 make_color_fns!(black, ColorString::new("\x1B[30m"), 0, -1);
 make_color_fns!(red, ColorString::new("\x1B[31m"), winapi::um::wincon::FOREGROUND_RED, -1);
 make_color_fns!(yellow, ColorString::new("\x1B[33m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN, -1);
