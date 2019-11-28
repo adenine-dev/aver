@@ -30,16 +30,11 @@ pub fn get_log_level() -> LogLevel {
   unsafe { return LOG_LEVEL; };
 }
 
-/// logs a single value that implements Display.
-pub fn _log<T: std::fmt::Display>(a: T) {
-  print!("{}", a);
-}
-
 /// logs any number of values that implements Display.
 #[macro_export]
 macro_rules! log {
   ($arg:expr) => {
-    $crate::_log($arg);
+    print!("{}", $arg);
   };
 
   ($arg0:expr, $($args:expr),+) => {

@@ -44,7 +44,9 @@ fn make_win_color(fg: i16, bg: i16) -> winapi::shared::minwindef::WORD {
 macro_rules! make_color_fns {
   ($name:ident, $linux_code:expr, $win_code_fg:expr, $win_code_bg:expr) => {
     #[cfg(not(windows))]
-    pub fn $name() -> String { $linux_code }
+    pub fn $name() -> String { 
+      $linux_code.to_string()
+    }
 
     #[cfg(windows)]
     pub fn $name() -> String {
@@ -62,24 +64,51 @@ macro_rules! make_color_fns {
   };
 }
 
-make_color_fns!(reset, "\033[00m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, 0);
+struct ColorString(String);
 
-make_color_fns!(white, "\033[30m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
-make_color_fns!(grey, "\033[30m", 0 | winapi::um::wincon::FOREGROUND_INTENSITY, -1);
-make_color_fns!(black, "\033[30m", 0, -1);
-make_color_fns!(red, "\033[31m", winapi::um::wincon::FOREGROUND_RED, -1);
-make_color_fns!(yellow, "\033[33m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN, -1);
-make_color_fns!(green, "\033[32m", winapi::um::wincon::FOREGROUND_GREEN, -1);
-make_color_fns!(cyan, "\033[36m", winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
-make_color_fns!(blue, "\033[34m", winapi::um::wincon::FOREGROUND_BLUE, -1);
-make_color_fns!(magenta, "\033[35m", winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_BLUE, -1);
+impl std::fmt::Display for ColorString {
+  fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+      f.write_str(&self.0)?;
+      Ok(())
+  }
+}
 
-make_color_fns!(on_white, "\033[107m", -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_GREEN | winapi::um::wincon::BACKGROUND_BLUE);
-make_color_fns!(on_grey, "\033[100m", -1, 0 | winapi::um::wincon::BACKGROUND_INTENSITY);
-make_color_fns!(on_black, "\033[40m", -1, 0);
-make_color_fns!(on_red, "\033[41m", -1, winapi::um::wincon::BACKGROUND_RED);
-make_color_fns!(on_yellow, "\033[43m", -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_GREEN);
-make_color_fns!(on_green, "\033[42m", -1, winapi::um::wincon::BACKGROUND_GREEN);
-make_color_fns!(on_cyan, "\033[46m", -1, winapi::um::wincon::BACKGROUND_GREEN | winapi::um::wincon::BACKGROUND_BLUE);
-make_color_fns!(on_blue, "\033[44m", -1, winapi::um::wincon::BACKGROUND_BLUE);
-make_color_fns!(on_magenta, "\033[45m", -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_BLUE);
+impl From<String> for ColorString {
+  #[inline]
+  fn from(s: String) -> Self {
+      Self {
+        0: s
+      }
+  }
+}
+
+impl ColorString {
+  pub fn new(s: &str) -> Self {
+      Self {
+        0: s.to_string()
+      }
+  }
+}
+
+
+make_color_fns!(reset, ColorString::new("\x1B[00m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, 0);
+
+make_color_fns!(white, ColorString::new("\x1B[30m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
+make_color_fns!(grey, ColorString::new("\x1B[30m"), 0 | winapi::um::wincon::FOREGROUND_INTENSITY, -1);
+make_color_fns!(black, ColorString::new("\x1B[30m"), 0, -1);
+make_color_fns!(red, ColorString::new("\x1B[31m"), winapi::um::wincon::FOREGROUND_RED, -1);
+make_color_fns!(yellow, ColorString::new("\x1B[33m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_GREEN, -1);
+make_color_fns!(green, ColorString::new("\x1B[32m"), winapi::um::wincon::FOREGROUND_GREEN, -1);
+make_color_fns!(cyan, ColorString::new("\x1B[36m"), winapi::um::wincon::FOREGROUND_GREEN | winapi::um::wincon::FOREGROUND_BLUE, -1);
+make_color_fns!(blue, ColorString::new("\x1B[34m"), winapi::um::wincon::FOREGROUND_BLUE, -1);
+make_color_fns!(magenta, ColorString::new("\x1B[35m"), winapi::um::wincon::FOREGROUND_RED | winapi::um::wincon::FOREGROUND_BLUE, -1);
+
+make_color_fns!(on_white, ColorString::new("\x1B[107m"), -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_GREEN | winapi::um::wincon::BACKGROUND_BLUE);
+make_color_fns!(on_grey, ColorString::new("\x1B[100m"), -1, 0 | winapi::um::wincon::BACKGROUND_INTENSITY);
+make_color_fns!(on_black, ColorString::new("\x1B[40m"), -1, 0);
+make_color_fns!(on_red, ColorString::new("\x1B[41m"), -1, winapi::um::wincon::BACKGROUND_RED);
+make_color_fns!(on_yellow, ColorString::new("\x1B[43m"), -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_GREEN);
+make_color_fns!(on_green, ColorString::new("\x1B[42m"), -1, winapi::um::wincon::BACKGROUND_GREEN);
+make_color_fns!(on_cyan, ColorString::new("\x1B[46m"), -1, winapi::um::wincon::BACKGROUND_GREEN | winapi::um::wincon::BACKGROUND_BLUE);
+make_color_fns!(on_blue, ColorString::new("\x1B[44m"), -1, winapi::um::wincon::BACKGROUND_BLUE);
+make_color_fns!(on_magenta, ColorString::new("\x1B[45m"), -1, winapi::um::wincon::BACKGROUND_RED | winapi::um::wincon::BACKGROUND_BLUE);
